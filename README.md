@@ -1,1 +1,1 @@
-Thonknetika app
+Thinknetica app
