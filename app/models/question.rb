@@ -3,4 +3,6 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
+  # accepts_nested_attributes_for :answers
+
 end
