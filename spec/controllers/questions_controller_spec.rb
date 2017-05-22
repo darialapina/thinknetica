@@ -75,7 +75,7 @@ RSpec.describe QuestionsController, type: :controller do
       it 'deletes question belonging to user' do
         sign_in(question.user)
 
-        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+        expect { delete :destroy, params: { id: question } }.to change(question.user.questions, :count).by(-1)
       end
 
       it 'redirects to index view' do

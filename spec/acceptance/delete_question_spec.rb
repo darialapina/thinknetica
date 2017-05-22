@@ -4,14 +4,13 @@ feature 'Delete question', %q{
   In order to delete question
   As an authenticated user
   I want to be able to delete my question
-  } do
+} do
 
-  # given(:question) { create(:question) }
   given(:user) { create(:user) }
+  given!(:question) { create(:question, user: user) }
 
   scenario 'Authenticated user deletes his question' do
     sign_in(user)
-    @questions = create(:question, user: user)
     visit questions_path
     click_on 'Delete'
 
@@ -19,9 +18,8 @@ feature 'Delete question', %q{
   end
 
   scenario "Authenticated user tries to delete somebody else's question" do
-    sign_in(user)
     other_user = create(:user)
-    @questions = create(:question, user: other_user)
+    sign_in(other_user)
     visit questions_path
     # click_on 'Delete'
     # expect(page).not_to have_content 'Your question was successfully deleted.'
