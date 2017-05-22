@@ -1,2 +1,13 @@
-h1 Вопрос
-h2 = question.title
+h1 = @question.title
+p= @question.body
+
+h2 Answers
+ul
+  -@question.answers.each do |answer|
+    li=answer.body
+
+h2 Give an answer
+= form_for([@question, Answer.new]) do |f|
+  =f.label :body
+  =f.text_area :body
+  =f.submit 'Create'

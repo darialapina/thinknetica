@@ -9,10 +9,11 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
 
     if @answer.save
-    # if @question.answers << Answer.new(answer_params)
+      flash[:notice] = 'Your answer successfully created.'
       redirect_to question_path(@question)
     else
-      render :new
+      flash[:alert] = 'Your answer has an error.'
+      render 'questions/show'
     end
   end
 

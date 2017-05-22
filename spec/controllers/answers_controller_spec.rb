@@ -46,9 +46,11 @@ RSpec.describe AnswersController, type: :controller do
       it 'fails to save new answer to DB' do
         expect { post :create, params: { question_id: question.id, answer: attributes_for(:invalid_answer)} }.to_not change(Answer, :count)
       end
-      it 'renders new view' do
+      it 'renders show question view' do
+      # it 'renders new view' do
         post :create, params: { question_id: question.id, answer: attributes_for(:invalid_answer) }
-        expect(response).to render_template :new
+        # expect(response).to render_template :new
+        expect(response).to render_template 'questions/show'
       end
     end
   end

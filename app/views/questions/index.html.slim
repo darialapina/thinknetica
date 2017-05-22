@@ -1,1 +1,6 @@
-h1 Вопросы
+h1 Questions list
+
+p = link_to 'Ask question', new_question_path
+
+-@questions.each do |question|
+  h2= link_to question.title, question
