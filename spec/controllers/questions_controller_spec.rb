@@ -49,7 +49,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with valid attributes' do
       it 'creates and saves new question to DB' do
-        expect { post :create, params: { question: attributes_for(:question)} }.to change(Question, :count).by(1)
+        expect { post :create, params: { question: attributes_for(:question)} }.to change(@user.questions, :count).by(1)
       end
       it 'redirects to question view' do
         post :create, params: { question: attributes_for(:question)}
@@ -65,6 +65,29 @@ RSpec.describe QuestionsController, type: :controller do
         post :create, params: { question: attributes_for(:invalid_question)}
         expect(response).to render_template :new
       end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:question) { create(:question) }
+
+    context 'owner' do
+      it 'deletes question belonging to user' do
+        sign_in(question.user)
+
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirects to index view' do
+        sign_in(question.user)
+
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
+    end
+
+    it "doesn't delete question belonging to somebody else" do
+      expect { delete :destroy, params: { id: question } }.not_to change(Question, :count)
     end
   end
 end
