@@ -4,6 +4,8 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
   let(:answer) { create(:answer) }
 
+  sign_in_user
+
   # describe 'GET #index' do
   #   Ответы будут выводиться на странице вопроса
   # end
