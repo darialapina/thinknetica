@@ -1,2 +1,24 @@
-h1 Вопрос
-h2 = question.title
+h1 = @question.title
+p= @question.body
+
+h2 Answers
+ul
+  -@question.answers.each do |answer|
+    - if answer.persisted?
+      li
+        =answer.body
+        - if user_signed_in? && current_user.author_of?(answer)
+          = link_to 'Delete', question_answer_path(@question,answer), method: :delete
+
+h2 Give an answer
+- if @answer&&@answer.errors.any?
+  div#error_explanation
+    h2 #{ pluralize(@answer.errors.count, "error")} prohibited this answer from being saved:
+    ul
+    - @answer.errors.full_messages.each do |message|
+      li= message
+
+= form_for([@question, Answer.new]) do |f|
+  =f.label :body
+  =f.text_area :body
+  =f.submit 'Create'

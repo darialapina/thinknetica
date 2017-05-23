@@ -1,1 +1,15 @@
-h1 Новый вопрос
+h1 New question
+- if @question.errors.any?
+  div#error_explanation
+    h2 #{ pluralize(@question.errors.count, "error")} prohibited this question from being saved:
+    ul
+    - @question.errors.full_messages.each do |message|
+      li= message
+
+
+= form_for @question do |f|
+  = f.label :title
+  = f.text_field :title
+  = f.label :body
+  = f.text_area :body
+  = f.submit 'Create'
