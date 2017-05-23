@@ -14,7 +14,6 @@ feature 'Delete answer', %q{
     sign_in(answer.user)
     visit question_path(answer.question)
     answer_body = answer.body
-    # save_and_open_page
 
     expect(page).to have_content answer_body
 

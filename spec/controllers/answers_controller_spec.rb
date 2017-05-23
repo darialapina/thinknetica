@@ -6,10 +6,6 @@ RSpec.describe AnswersController, type: :controller do
 
   sign_in_user
 
-  # describe 'GET #index' do
-  #   Ответы будут выводиться на странице вопроса
-  # end
-
   describe 'GET #new' do
     before do
       get :new, params: { question_id: question.id }
@@ -35,8 +31,11 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'with valid attributes' do
-      it 'creates and saves new answer to DB' do
+      it 'creates and saves new answer for the question to DB' do
         expect { post :create, params: { question_id: question.id, answer: attributes_for(:answer)} }.to change(question.answers, :count).by(1)
+      end
+      it 'creates and saves new answer for the user to DB' do
+        expect { post :create, params: { question_id: question.id, answer: attributes_for(:answer)} }.to change(@user.answers, :count).by(1)
       end
       it 'redirects to question view' do
         post :create, params: { question_id: question.id, answer: attributes_for(:answer) }
@@ -49,9 +48,7 @@ RSpec.describe AnswersController, type: :controller do
         expect { post :create, params: { question_id: question.id, answer: attributes_for(:invalid_answer)} }.to_not change(Answer, :count)
       end
       it 'renders show question view' do
-      # it 'renders new view' do
         post :create, params: { question_id: question.id, answer: attributes_for(:invalid_answer) }
-        # expect(response).to render_template :new
         expect(response).to render_template 'questions/show'
       end
     end

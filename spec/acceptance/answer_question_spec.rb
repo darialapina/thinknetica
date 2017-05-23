@@ -14,7 +14,6 @@ feature 'answer a question', %q{
     visit question_path(id: question.id)
     fill_in 'Body', with: 'My answer'
     click_on 'Create'
-    # save_and_open_page
 
     expect(page).to have_content 'My answer'
   end
@@ -26,6 +25,7 @@ feature 'answer a question', %q{
     click_on 'Create'
 
     expect(page).to have_content "Your answer has an error."
+    expect(page).to have_content "Body can't be blank"
   end
 
   scenario 'Visitor tries to create an answer' do

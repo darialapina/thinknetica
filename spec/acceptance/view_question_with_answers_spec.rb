@@ -7,7 +7,7 @@ feature 'Vititor views question', %q{
   I want to be able views question with answers
 } do
 
-  given(:question) { FactoryGirl.create :question }
+  given(:question) { create :question }
   given!(:answers) { create_list(:answer,2, question: question) }
 
   scenario 'User visits question page' do
@@ -15,7 +15,6 @@ feature 'Vititor views question', %q{
 
     expect(page).to have_content(question.title)
     expect(page).to have_content(question.body)
-    # save_and_open_page
 
     question.answers.each do |answer|
       expect(page).to have_content(answer.body)

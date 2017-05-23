@@ -21,10 +21,7 @@ feature 'Delete question', %q{
     other_user = create(:user)
     sign_in(other_user)
     visit questions_path
-    # click_on 'Delete'
-    # expect(page).not_to have_content 'Your question was successfully deleted.'
     expect(page).not_to have_link "Delete"
-    # save_and_open_page
   end
 
   scenario 'Non-Authenticated user tries to delete question' do

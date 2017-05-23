@@ -29,6 +29,7 @@ feature "User create question", %q{
     click_on 'Create'
 
     expect(page).to have_content 'Your question has errors.'
+    expect(page).to have_content "Body can't be blank"
   end
 
   scenario 'Non-Authenticated user tries to create a question' do

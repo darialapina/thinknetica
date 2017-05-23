@@ -11,7 +11,6 @@ feature 'User views questions list', %q{
 
   scenario 'User navigates to questions page' do
     visit questions_path
-    # save_and_open_page
 
     questions.each do |question|
       expect(page).to have_content question.title

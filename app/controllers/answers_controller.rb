@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user! #, except: [:index, :show]
-  before_action :load_question #, only: [:new, :create]
+  before_action :authenticate_user!
+  before_action :load_question
 
   def new
     @answer = @question.answers.build
