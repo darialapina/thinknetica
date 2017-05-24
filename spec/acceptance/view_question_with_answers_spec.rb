@@ -8,10 +8,10 @@ feature 'Vititor views question', %q{
 } do
 
   given(:question) { create :question }
-  given!(:answers) { create_list(:answer,2, question: question) }
+  given!(:answers) { create_list(:answer, 2, question: question) }
 
   scenario 'User visits question page' do
-    visit question_path(id: question.id)
+    visit question_path(question)
 
     expect(page).to have_content(question.title)
     expect(page).to have_content(question.body)

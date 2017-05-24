@@ -4,12 +4,12 @@ RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question,2) }
+    let(:questions) { create_list(:question, 2) }
 
     before { get :index }
 
     it 'assigns an array of questions' do
-      expect(assigns(:questions)).to  match_array(questions)
+      expect(assigns(:questions)).to match_array(questions)
     end
 
     it 'renders index view' do
@@ -19,7 +19,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #show' do
     before do
-      get :show, params: { id: question}
+      get :show, params: { id: question }
     end
 
     it 'pulls question from DB to @question' do
@@ -49,20 +49,20 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with valid attributes' do
       it 'creates and saves new question to DB' do
-        expect { post :create, params: { question: attributes_for(:question)} }.to change(@user.questions, :count).by(1)
+        expect { post :create, params: { question: attributes_for(:question) } }.to change(@user.questions, :count).by(1)
       end
       it 'redirects to question view' do
-        post :create, params: { question: attributes_for(:question)}
+        post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to question_path(assigns(:question))
       end
     end
 
     context 'with invalid attributes' do
       it 'fails to save new question to DB' do
-        expect { post :create, params: { question: attributes_for(:invalid_question)} }.to_not change(Question, :count)
+        expect { post :create, params: { question: attributes_for(:invalid_question) } }.to_not change(Question, :count)
       end
       it 'renders new view' do
-        post :create, params: { question: attributes_for(:invalid_question)}
+        post :create, params: { question: attributes_for(:invalid_question) }
         expect(response).to render_template :new
       end
     end
