@@ -11,7 +11,6 @@ feature 'answer a question', %q{
 
   scenario 'Authenticated user creates a valid answer', js: true do
     sign_in(user)
-    sleep(1)
     visit question_path(question)
 
     fill_in 'Body', with: 'My answer'
@@ -28,7 +27,7 @@ feature 'answer a question', %q{
 
   scenario 'Authenticated user creates an invalid answer', js: true do
     sign_in(user)
-    sleep(1)
+    # sleep(1)
     visit question_path(question)
     fill_in 'Body', with: nil
     click_on 'Create'

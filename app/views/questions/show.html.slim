@@ -4,8 +4,7 @@ p= @question.body
 h2 Answers
 .answers
   ul
-    -@question.answers.each do |answer|
-      = render 'questions/answer', answer: answer
+    = render @question.answers
 
 - if user_signed_in?
   h2 Give an answer

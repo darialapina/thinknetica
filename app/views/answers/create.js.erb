@@ -1,7 +1,3 @@
-<% if @answer.persisted? %>
-  $('.answers ul').append("<%= j render 'questions/answer', answer: @answer %>");
-  $('#answer_body').val('');
-  $('.errors').html('');
-<% else %>
-  $('.errors').html("<%= j render 'errors', item: @answer %>");
-<% end %>
+$('.answers ul').append("<%= j render @answer %>");
+$('#answer_body').val('');
+$('.errors').html("<%= j render 'errors', item: @answer %>");

@@ -5,4 +5,6 @@ module AcceptanceHelper
     fill_in 'Password', with: user.password
     click_on 'Log in'
   end
+
+  Capybara.default_wait_time = 5
 end
