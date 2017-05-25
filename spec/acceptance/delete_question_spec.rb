@@ -21,11 +21,11 @@ feature 'Delete question', %q{
     other_user = create(:user)
     sign_in(other_user)
     visit questions_path
-    expect(page).not_to have_link "Delete"
+    expect(page).not_to have_link 'Delete'
   end
 
   scenario 'Non-Authenticated user tries to delete question' do
     visit questions_path
-    expect(page).not_to have_link "Delete"
+    expect(page).not_to have_link 'Delete'
   end
 end

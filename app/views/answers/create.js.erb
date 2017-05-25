@@ -1,0 +1,3 @@
+$('.answers ul').append("<%= j render @answer %>");
+$('#answer_body').val('');
+$('.errors').html("<%= j render 'errors', item: @answer %>");
