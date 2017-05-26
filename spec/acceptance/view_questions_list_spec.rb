@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
   # - Пользователь может просматривать список вопросов
 
 feature 'User views questions list', %q{

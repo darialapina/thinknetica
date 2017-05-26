@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
   # - Пользователь может создавать вопрос
 
 feature "User create question", %q{
