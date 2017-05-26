@@ -1,16 +1,18 @@
 h1= @question.title
 p= @question.body
 
-h2 Answers
+h3 Answers
 .answers
   ul
     = render @question.answers
 
 - if user_signed_in?
-  h2 Give an answer
+  h3 Give an answer
   .errors
 
   = form_for [@question, Answer.new], remote: true do |f|
-    =f.label :body
-    =f.text_area :body
-    =f.submit 'Create'
+    p
+      = f.label :body, 'Your answer'
+      .answer-errors
+      = f.text_area :body
+    p= f.submit 'Create'
