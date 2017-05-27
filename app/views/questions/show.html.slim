@@ -1,4 +1,8 @@
-h1= @question.title
+h1.question
+  = @question.title
+  - if user_signed_in? && current_user.author_of?(@question)
+    '
+    small= link_to 'Edit', edit_question_path(@question)
 p= @question.body
 
 h3 Answers

@@ -60,7 +60,7 @@ RSpec.describe AnswersController, type: :controller do
     it 'assigns Answer from DB to @answer' do
       patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }
       expect(assigns(:answer)).to eq answer
-      end
+    end
 
     it 'assigns Question from DB to @question' do
       patch :update, params: { id: answer, question_id: question, answer: attributes_for(:answer), format: :js }

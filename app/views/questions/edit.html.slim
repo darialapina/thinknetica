@@ -1,0 +1,12 @@
+h1 Edit question
+= render 'errors', item: @question
+
+= form_for @question do |f|
+  p
+    = f.label :title
+    = f.text_field :title
+  p
+    = f.label :body
+    = f.text_area :body
+
+  p= f.submit 'Save'

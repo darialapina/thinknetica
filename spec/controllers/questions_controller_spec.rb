@@ -68,6 +68,59 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'GET #edit' do
+    sign_in_user
+
+    before { get :edit, params: { id: question } }
+
+    it 'assings the requested question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'renders edit view' do
+      expect(response).to render_template :edit
+    end
+  end
+
+  describe 'PATCH #update' do
+
+    # let!(:question) { create(:question) }
+
+
+
+    context 'owner' do
+      sign_in_user
+      it 'assigns Question from DB to @question' do
+        patch :update, params: { id: question, question: attributes_for(:question) }
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'changes question attributes' do
+        # sign_in(question.user)
+        patch :update, params: { id: question, question: { body: 'new body'} }
+        question.reload
+        expect(question.body).to eq 'new body'
+      end
+
+      it 'redirects to the updated question' do
+        patch :update, params: { id: question, question: attributes_for(:question) }
+        expect(response).to redirect_to question
+      end
+    end
+
+    context "other's question" do
+      let!(:other_user) { create(:user) }
+      let(:other_question) { create(:question, user: other_user) }
+
+      it "doesn't change question attributes" do
+        patch :update, params: { id: other_question, question: { body: 'new body'} }
+        other_question.reload
+        expect(other_question.body).to_not eq 'new body'
+      end
+    end
+  end
+
+
   describe 'DELETE #destroy' do
     let!(:question) { create(:question) }
 
