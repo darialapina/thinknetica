@@ -100,20 +100,20 @@ RSpec.describe AnswersController, type: :controller do
       it 'deletes answer belonging to user' do
         sign_in(answer.user)
 
-        expect { delete :destroy, params: { id: answer, question_id: answer.question_id } }.to change(answer.user.answers, :count).by(-1)
+        expect { delete :destroy, params: { id: answer, question_id: answer.question_id, format: :js } }.to change(answer.user.answers, :count).by(-1)
       end
 
-      it 'redirects to question page' do
+      it 'removing answer from view' do
         sign_in(answer.user)
         question = answer.question
 
-        delete :destroy, params: { id: answer, question_id: answer.question_id }
-        expect(response).to redirect_to question_path(question)
+        delete :destroy, params: { id: answer, question_id: answer.question_id, format: :js }
+        expect(response).to_not have_content answer.body
       end
     end
 
     it "doesn't delete answer belonging to somebody else" do
-      expect { delete :destroy, params: { id: answer, question_id: answer.question_id } }.not_to change(Answer, :count)
+      expect { delete :destroy, params: { id: answer, question_id: answer.question_id, format: :js } }.not_to change(Answer, :count)
     end
   end
 end
