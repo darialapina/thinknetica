@@ -83,11 +83,6 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-
-    # let!(:question) { create(:question) }
-
-
-
     context 'owner' do
       sign_in_user
       it 'assigns Question from DB to @question' do
@@ -96,7 +91,6 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 'changes question attributes' do
-        # sign_in(question.user)
         patch :update, params: { id: question, question: { body: 'new body'} }
         question.reload
         expect(question.body).to eq 'new body'
