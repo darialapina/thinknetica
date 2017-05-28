@@ -7,10 +7,13 @@ FactoryGirl.define do
     question
     body
     user
+    is_best false
   end
 
   factory :invalid_answer, class: 'Answer' do
+    question
     body nil
     user
+    is_best false
   end
 end

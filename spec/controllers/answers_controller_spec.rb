@@ -116,4 +116,21 @@ RSpec.describe AnswersController, type: :controller do
       expect { delete :destroy, params: { id: answer, question_id: answer.question_id, format: :js } }.not_to change(Answer, :count)
     end
   end
+
+  describe 'PATCH #set_best' do
+    context 'owner of the question' do
+      it 'sets best answer' do
+        sign_in(question.user)
+        patch :set_best, params: { id: answer, question_id: question.id, format: :js }
+        answer.reload
+        expect(answer.is_best?).to be true
+      end
+    end
+
+    it "doesn't set best answer to a question belonging to somebody else" do
+      patch :set_best, params: { id: answer, question_id: question.id, format: :js }
+      answer.reload
+      expect(answer.is_best?).to be false
+    end
+  end
 end

@@ -1,5 +1,10 @@
 - if answer.persisted?
   li id="answer_#{answer.id}"
+    - if user_signed_in? && current_user.author_of?(@question)
+      = radio_button_tag :is_best, answer.id, answer.is_best?, class: 'set-best-answer', data: { answer_id: answer.id, question_id: @question.id }
+      '
+      = label_tag :is_best, "Set best"
+      '
     = answer.body
     - if user_signed_in? && current_user.author_of?(answer)
       '
