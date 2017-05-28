@@ -3,7 +3,7 @@ require_relative 'acceptance_helper'
 feature 'Answer editing', %q{
   In order to fix mistake
   As an author of answer
-  I'd like ot be able to edit my answer
+  I want to be able to edit my answer
 } do
 
   given!(:user) { create(:user) }
@@ -41,7 +41,7 @@ feature 'Answer editing', %q{
     end
   end
 
-  scenario "Authenticated user tries to edit other user's question" do
+  scenario "Authenticated user tries to edit other user's answer" do
     other_user = create(:user)
     visit question_path(question)
 
