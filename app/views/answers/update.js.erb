@@ -23,7 +23,8 @@
         question_id: question_id,
       },
       success: function(data){
-        $('.answers p.notice').html(data.message)
+        $('.answers p.notice').html(data.message);
+        $('li#answer_' + answer_id).parent().prepend($('li#answer_' + answer_id));
       },
       error: function(){
         $('.answers p.notice').html('Something is wrong.')

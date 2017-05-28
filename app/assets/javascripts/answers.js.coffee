@@ -22,5 +22,6 @@ $ ->
         question_id: question_id
       success: (data) ->
         $('.answers p.notice').html(data.message)
+        $('li#answer_' + answer_id).parent().prepend($('li#answer_' + answer_id))
       error: ->
         $('.answers p.notice').html('Something is wrong.')

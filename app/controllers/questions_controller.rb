@@ -30,8 +30,10 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(question_params)
+      flash[:notice] = 'Your question was successfully updated.'
       redirect_to @question
     else
+      flash[:alert] = 'Your question has errors.'
       render :edit
     end
   end

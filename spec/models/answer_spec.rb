@@ -24,4 +24,14 @@ RSpec.describe Answer, type: :model do
       expect(other_answer.is_best?).to eq false
     end
   end
+
+  describe 'order answers' do
+    let!(:question) { create(:question) }
+    let!(:answers) { create_list(:answer, 2, question: question) }
+    let!(:other_answer) { create(:answer, question: question, is_best: true) }
+
+    it 'should place best answer first' do
+      expect(question.answers.first.id).to eq other_answer.id
+    end
+  end
 end

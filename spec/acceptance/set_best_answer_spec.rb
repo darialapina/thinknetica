@@ -30,12 +30,31 @@ feature 'Set best answer', %q{
       end
     end
 
-    scenario 'tries to set best answer', js: true do
+    scenario 'sets best answer', js: true do
+      other_answer = create(:answer, question: question)
+      visit question_path(question)
+
       within '.answers' do
-        within "#answer_#{question.answers.first.id}" do
+        # answer = question.answers.last
+        within "#answer_#{other_answer.id}" do
           choose 'is_best'
         end
         expect(page).to have_content "You've set the best answer"
+        expect(page.first(:css, 'li')).to have_content other_answer.body
+      end
+    end
+
+    scenario 'changes best answer', js: true do
+      answer = question.answers.last
+      other_answer = create(:answer, question: question, is_best: true)
+      visit question_path(question)
+
+      within '.answers' do
+        within "#answer_#{answer.id}" do
+          choose 'is_best'
+        end
+        expect(page).to have_content "You've set the best answer"
+        expect(page.first(:css, 'li')).to have_content answer.body
       end
     end
   end
