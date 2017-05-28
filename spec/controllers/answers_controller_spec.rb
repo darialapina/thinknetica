@@ -125,6 +125,14 @@ RSpec.describe AnswersController, type: :controller do
         answer.reload
         expect(answer.is_best?).to be true
       end
+
+      it 'changes best answer' do
+        other_answer = create(:answer, question: answer.question, is_best: true)
+        sign_in(question.user)
+        patch :set_best, params: { id: answer, question_id: question.id, format: :js }
+        other_answer.reload
+        expect(other_answer.is_best?).to be false
+      end
     end
 
     it "doesn't set best answer to a question belonging to somebody else" do

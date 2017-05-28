@@ -21,7 +21,8 @@ class AnswersController < ApplicationController
 
   def set_best
     if current_user.author_of?(@question)
-      @answer.update(is_best: true)
+      @answer.set_best
+
       render json: { message: "You've set the best answer" }
     else
       render json: { message: "You're not allowed to set the best answer for this question" }
