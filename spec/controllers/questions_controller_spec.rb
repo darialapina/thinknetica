@@ -84,7 +84,8 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     context 'owner' do
-      sign_in_user
+      before { sign_in(question.user) }
+
       it 'assigns Question from DB to @question' do
         patch :update, params: { id: question, question: attributes_for(:question) }
         expect(assigns(:question)).to eq question
@@ -103,8 +104,8 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context "other's question" do
-      let!(:other_user) { create(:user) }
-      let(:other_question) { create(:question, user: other_user) }
+      before { sign_in(question.user) }
+      let!(:other_question) { create(:question) }
 
       it "doesn't change question attributes" do
         patch :update, params: { id: other_question, question: { body: 'new body'} }
@@ -112,12 +113,18 @@ RSpec.describe QuestionsController, type: :controller do
         expect(other_question.body).to_not eq 'new body'
       end
     end
+
+    context "unauthenticated user" do
+      it "doesn't change question attributes" do
+        patch :update, params: { id: question, question: { body: 'new body'} }
+        question.reload
+        expect(question.body).to_not eq 'new body'
+      end
+    end
   end
 
 
   describe 'DELETE #destroy' do
-    let!(:question) { create(:question) }
-
     context 'owner' do
       it 'deletes question belonging to user' do
         sign_in(question.user)
@@ -134,6 +141,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it "doesn't delete question belonging to somebody else" do
+      question
       expect { delete :destroy, params: { id: question } }.not_to change(Question, :count)
     end
   end
