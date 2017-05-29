@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$ ->
+ready = ->
   $('.answers').on 'click', '.edit-answer-link', (e) ->
     e.preventDefault();
     $(this).hide();
@@ -24,3 +24,7 @@ $ ->
         $('li#answer_' + answer_id).parent().prepend($('li#answer_' + answer_id))
       error: ->
         $('.answers p.notice').html('Something is wrong.')
+
+$(document).on('turbolinks:load', ready)
+$(document).on('page:load', ready)
+$(document).on('page:update', ready)
