@@ -37,7 +37,7 @@ feature 'Set best answer', %q{
       within '.answers' do
         # answer = question.answers.last
         within "#answer_#{other_answer.id}" do
-          choose 'is_best'
+          choose 'best'
         end
         expect(page).to have_content "You've set the best answer"
         expect(page.first(:css, 'li')).to have_content other_answer.body
@@ -46,12 +46,12 @@ feature 'Set best answer', %q{
 
     scenario 'changes best answer', js: true do
       answer = question.answers.last
-      other_answer = create(:answer, question: question, is_best: true)
+      other_answer = create(:answer, question: question, best: true)
       visit question_path(question)
 
       within '.answers' do
         within "#answer_#{answer.id}" do
-          choose 'is_best'
+          choose 'best'
         end
         expect(page).to have_content "You've set the best answer"
         expect(page.first(:css, 'li')).to have_content answer.body

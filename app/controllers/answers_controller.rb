@@ -1,7 +1,8 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_question
   before_action :load_answer, only: [:update, :destroy, :set_best]
+  before_action :load_question
+
 
   def new
     @answer = @question.answers.build
@@ -36,7 +37,7 @@ private
   end
 
   def load_question
-    @question = Question.find(params[:question_id])
+    @question = @answer ? @answer.question : Question.find(params[:question_id])
   end
 
   def answer_params
