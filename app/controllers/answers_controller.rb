@@ -1,6 +1,8 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_answer, only: [:update, :destroy, :set_best]
   before_action :load_question
+
 
   def new
     @answer = @question.answers.build
@@ -10,19 +12,32 @@ class AnswersController < ApplicationController
     @answer = @question.answers.create(answer_params.merge(user_id: current_user.id))
   end
 
+  def update
+    @answer.update(answer_params) if current_user.author_of?(@answer)
+  end
+
   def destroy
-    @answer = Answer.find(params[:id])
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      flash[:notice] = 'Your answer was successfully deleted.'
+    @answer.destroy if current_user.author_of?(@answer)
+  end
+
+  def set_best
+    if current_user.author_of?(@question)
+      @answer.set_best
+
+      render json: { message: "You've set the best answer" }
+    else
+      render json: { message: "You're not allowed to set the best answer for this question" }
     end
-    redirect_to @answer.question
   end
 
 private
 
+  def load_answer
+    @answer = Answer.find(params[:id])
+  end
+
   def load_question
-    @question = Question.find(params[:question_id])
+    @question = @answer ? @answer.question : Question.find(params[:question_id])
   end
 
   def answer_params

@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:show, :destroy]
+  before_action :load_question, only: [:show, :destroy, :edit, :update]
 
   def index
     @questions = Question.all
@@ -22,6 +22,23 @@ class QuestionsController < ApplicationController
     else
       flash[:alert] = 'Your question has errors.'
       render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if current_user.author_of?(@question)
+      if @question.update(question_params)
+        flash[:notice] = 'Your question was successfully updated.'
+        redirect_to @question
+      else
+        flash[:alert] = 'Your question has errors.'
+        render :edit
+      end
+    else
+      redirect_to @question
     end
   end
 

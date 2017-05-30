@@ -1,4 +1,4 @@
-h1 New question
+h1 Edit question
 = render 'errors', item: @question
 
 = form_for @question do |f|
@@ -9,4 +9,4 @@ h1 New question
     = f.label :body
     = f.text_area :body
 
-  p= f.submit 'Create'
+  p= f.submit 'Save'

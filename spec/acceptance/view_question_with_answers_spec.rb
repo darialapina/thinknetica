@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
   #  - Пользователь может просматривать вопрос и ответы к нему.
 
 feature 'Vititor views question', %q{
