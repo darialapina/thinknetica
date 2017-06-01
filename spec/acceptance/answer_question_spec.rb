@@ -33,7 +33,7 @@ feature 'answer a question', %q{
     click_on 'Create'
 
     expect(current_path).to eq question_path(question)
-    within '.errors' do
+    within '.answers_errors' do
       expect(page).to have_content "Body can't be blank"
     end
   end

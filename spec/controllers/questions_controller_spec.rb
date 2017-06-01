@@ -25,6 +25,15 @@ RSpec.describe QuestionsController, type: :controller do
     it 'pulls question from DB to @question' do
       expect(assigns(:question)).to eq question
     end
+
+    it 'assigns new answer for question' do
+      expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
+    it 'builds new attachment for answer' do
+      expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
+    end
+
     it 'renders show view' do
       expect(response).to render_template :show
     end

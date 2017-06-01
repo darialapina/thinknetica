@@ -1,6 +1,5 @@
 - if item.errors.any?
   div#error_explanation
-    h2 #{ pluralize(item.errors.count, "error")} prohibited this entity from being saved:
     ul
     - item.errors.full_messages.each do |message|
       li= message

@@ -1,7 +1,12 @@
 <% if @answer.errors.present? %>
   <% @answer.errors.full_messages.each do |message| %>
-    $('.answer-errors').html('<%= j message %>');
+    $('.answers .notice').html('<%= j message %>');
   <% end %>
 <% else %>
+<% if remotipart_submitted? %>
+  $('.answers li#answer_<%= @answer.id %>').replaceWith("<%=  j "#{render(@answer)}" %>");
+<% else %>
   $('.answers li#answer_<%= @answer.id %>').replaceWith('<%= j render @answer %>');
+<% end %>
+
 <% end %>

@@ -3,11 +3,15 @@ h1.question
   - if user_signed_in? && current_user.author_of?(@question)
     '
     small= link_to 'Edit', edit_question_path(@question)
+  .errors
 p= @question.body
 p Attachments:
-ul
+ul.question_attachments
   - @question.attachments.each do |a|
-    li= link_to a.file.identifier, a.file.url
+    li id="attachment_#{a.id}"
+      = link_to a.file.identifier, a.file.url
+      -if user_signed_in? && current_user.author_of?(@question)
+          =link_to 'Delete', '', class: 'delete-attachment-link', data: { attachment_id: a.id }
 
 h3 Answers
 .answers
@@ -17,10 +21,17 @@ h3 Answers
 
 - if user_signed_in?
   h3 Give an answer
-  .errors
+  .answers_errors
 
-  = form_for [@question, Answer.new], remote: true do |f|
+  = form_for [@question, @answer], remote: true do |f|
     p
       = f.label :body
       = f.text_area :body
+    p Attachments:
+    .attachments
+      = f.fields_for :attachments do |attachment|
+        = render 'attachment_fields', f: attachment
+      .links
+        = link_to_add_association 'Add file', f, :attachments
+
     p= f.submit 'Create'
