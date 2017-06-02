@@ -3,7 +3,7 @@ h1.question
   - if user_signed_in? && current_user.author_of?(@question)
     '
     small= link_to 'Edit', edit_question_path(@question)
-  .errors
+.errors
 p= @question.body
 p Attachments:
 ul.question_attachments

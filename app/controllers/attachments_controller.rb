@@ -8,7 +8,7 @@ class AttachmentsController < ApplicationController
       @attachment.destroy
       head :ok
     else
-      redirect_to @attachable
+      head :unauthorized
     end
   end
 
