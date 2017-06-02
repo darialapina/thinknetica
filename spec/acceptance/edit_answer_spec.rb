@@ -7,11 +7,11 @@ feature 'Answer editing', %q{
 } do
 
   given!(:user) { create(:user) }
-  given!(:question) { create(:question) }
-  given!(:answer) { create(:answer, question: question, user: user) }
+  # given!(:question) { create(:question) }
+  given!(:answer) { create(:answer, user: user) }
 
   scenario 'Unauthenticated user tries to edit answer' do
-    visit question_path(question)
+    visit question_path(answer.question)
 
     expect(page).to_not have_link 'Edit'
   end
@@ -19,7 +19,7 @@ feature 'Answer editing', %q{
   describe 'Authenticated user' do
     before do
       sign_in user
-      visit question_path(question)
+      visit question_path(answer.question)
     end
 
     scenario 'sees link to Edit' do
@@ -43,7 +43,7 @@ feature 'Answer editing', %q{
 
   scenario "Authenticated user tries to edit other user's answer" do
     other_user = create(:user)
-    visit question_path(question)
+    visit question_path(answer.question)
 
     within '.answers' do
       expect(page).to_not have_link 'Edit'

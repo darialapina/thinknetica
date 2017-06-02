@@ -1,3 +1,7 @@
-$('.answers ul').append("<%= j render @answer %>");
+<% if remotipart_submitted? %>
+  $('.answers ul').append("<%= j "#{render @answer}" %>");
+<% else %>
+  $('.answers ul').append("<%= j render @answer %>");
+<% end %>
 $('form#new_answer #answer_body').val('');
-$('.errors').html("<%= j render 'errors', item: @answer %>");
+$('.answers_errors').html("<%= j render 'errors', item: @answer %>");

@@ -15,3 +15,9 @@
         = f.label :body, "Answer"
         = f.text_area :body
         = f.submit 'Save'
+    ul
+      - answer.attachments.each do |a|
+        li id="attachment_#{a.id}"
+          = link_to a.file.identifier, a.file.url
+          -if user_signed_in? && current_user.author_of?(answer)
+              =link_to 'Delete', '', class: 'delete-attachment-link', data: { attachment_id: a.id }
