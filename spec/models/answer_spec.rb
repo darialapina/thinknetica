@@ -38,4 +38,11 @@ RSpec.describe Answer, type: :model do
       expect(question.answers.first.id).to eq other_answer.id
     end
   end
+
+  it 'should count total rate for answer' do
+    answer = create(:answer)
+    votes = create_list(:vote, 3, votable: answer, value: -1)
+
+    expect(answer.rating).to eq -3
+  end
 end
