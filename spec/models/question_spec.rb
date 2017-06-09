@@ -17,4 +17,19 @@ RSpec.describe Question, type: :model do
 
     expect(question.rating).to eq 3
   end
+
+  describe 'check if question has a vote by user' do
+    let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
+    let(:question) { create(:question) }
+    let!(:vote) { create(:vote, votable: question, user: user) }
+
+    it 'should return true if question has a vote by user' do
+      expect(question.has_vote_by?(user)).to eq true
+    end
+
+    it "should return false if question doesn't have a vote by user" do
+      expect(question.has_vote_by?(other_user)).to eq false
+    end
+  end
 end

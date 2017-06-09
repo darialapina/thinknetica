@@ -16,7 +16,7 @@ ul.question_attachments
 h3 Answers
 .answers
   p.notice
-  ul
+  ul.answers_list
     = render @question.answers
 
 - if user_signed_in?
