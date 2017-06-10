@@ -1,31 +1,31 @@
 class VotesController < ApplicationController
-	before_action :authenticate_user!
-	before_action :load_vote, only: [:reset]
-	before_action :load_votable, only: [:create]
+  before_action :authenticate_user!
+  before_action :load_vote, only: [:reset]
+  before_action :load_votable, only: [:create]
 
-	def create
-		if !current_user.author_of?(@votable)&&!@votable.has_vote_by?(current_user)
-			current_user.votes.create({value: params[:value], votable_id: params[:votable_id], votable_type: params[:votable_type]})
+  def create
+    if !current_user.author_of?(@votable) && !@votable.has_vote_by?(current_user)
+      current_user.votes.create({value: params[:value], votable: @votable})
       render json: @votable.rating
     else
       head :unauthorized
     end
-	end
+  end
 
-	def reset
-		if current_user.author_of?(@vote)
-			@votable = @vote.votable
+  def reset
+    if current_user.author_of?(@vote)
+      @votable = @vote.votable
       @vote.destroy!
       render json: @votable.rating
     else
       head :unauthorized
     end
-	end
+  end
 
 private
 
   def load_vote
-    @vote = Vote.where(user_id: current_user.id).where(votable_id: params[:votable_id]).where(votable_type: params[:votable_type]).first
+    @vote = Vote.where(user_id: current_user.id, votable_id: params[:votable_id], votable_type: params[:votable_type]).first
   end
 
   def load_votable
@@ -33,6 +33,6 @@ private
   end
 
   # def vote_params
-  # 	params.permit(:value, :votable_id, :votable_type)
+  #   params.permit(:value, :votable_id, :votable_type)
   # end
 end

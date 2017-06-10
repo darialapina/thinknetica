@@ -46,10 +46,6 @@ RSpec.describe Answer, type: :model do
     expect(answer.rating).to eq -3
   end
 
-  def has_vote_by?(user)
-    self.votes.exists?(user_id: user.id)
-  end
-
   describe 'check if answer has a vote by user' do
     let(:user) { create(:user) }
     let(:other_user) { create(:user) }
