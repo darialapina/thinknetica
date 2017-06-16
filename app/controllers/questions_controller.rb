@@ -68,10 +68,11 @@ private
     return if @question.errors.any?
     ActionCable.server.broadcast(
       'questions',
-      ApplicationController.render(
-        partial: 'questions/question',
-        locals: { question: @question }
-      )
+      @question.as_json(methods: :rating)
+      # ApplicationController.render(
+      #   partial: 'questions/question',
+      #   locals: { question: @question }
+      # )
     )
   end
 end

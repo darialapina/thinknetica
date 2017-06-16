@@ -50,6 +50,10 @@ feature "User create question", %q{
         visit questions_path
       end
 
+      Capybara.using_session('other_user') do
+        visit questions_path
+      end
+
       Capybara.using_session('user') do
         click_on 'Ask question'
         fill_in 'Title', with: 'Test question'
@@ -62,6 +66,15 @@ feature "User create question", %q{
       end
 
       Capybara.using_session('guest') do
+        expect(page).to have_content 'Test question'
+      end
+
+      Capybara.using_session('other_user') do
+        other_user = create(:user)
+        sign_in(other_user)
+
+        expect(page).to have_content 'Up'
+        expect(page).to have_content 'Down'
         expect(page).to have_content 'Test question'
       end
     end

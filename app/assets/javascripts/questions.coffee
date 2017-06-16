@@ -10,5 +10,6 @@ $ ->
     ,
 
     received: (data) ->
-      questionsList.append data
+      console.log data
+      questionsList.append JST["templates/question"](data)
   })
