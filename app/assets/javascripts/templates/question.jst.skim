@@ -1,0 +1,8 @@
+div id="question_#{@id}"
+  a href="/questions/#{@id}" =@title
+
+  - if @user_id == gon.user_id
+    a.delete-answer-link data-remote="true" rel="nofollow" data-method="delete" href="/questions/#{@id}" Delete
+  p
+    | Rate:
+    span.rate=< question.rating
