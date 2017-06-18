@@ -1,0 +1,39 @@
+li id="answer_#{@id}"
+  - if gon.user_id == gon.question_user_id
+    input type="radio" name="best" id="best_#{@id}" value="#{@id}" class="set-best-answer" data-answer-id="#{@id}" data-question-id="#{@question_id}"
+    '
+    label for="best_#{@id}" Set best
+    '
+  = @body
+
+  - if gon.user_id && @user_id == gon.user_id
+    a.edit-answer-link data-answer-id="#{@id}" href="#" Edit
+    '
+    a.delete-answer-link data-remote="true" rel="nofollow" data-method="delete" href="/answers/#{@id}" Delete
+    form.edit_answer id="edit-answer-#{@id}" action="/answers/#{@id}" data-remote="true" method="post" accepts-charset="UTF-8"
+      input name="utf8" type="hidden" value="✓"
+      input type="hidden" name="_method" value="patch"
+      label for="answer_body_#{@id}" Answer
+      textarea name="answer[body]" id="answer_body_#{@id}" =@body
+      input type="submit" name="commit" value="Save" data-disable-with="Save"
+
+
+
+  - if gon.user_id && (@user_id != gon.user_id)
+    '
+    a.vote-link data-value="1" data-votable-id="#{@id}" data-votable-type="Answer" href="#" Up
+    '
+    a.reset-vote-link data-votable-id="#{@id}" data-votable-type="Answer" style="display: none" href="#" Reset
+    '
+    a.vote-link data-value="-1" data-votable-id="#{@id}" data-votable-type="Answer" href="#" Down
+
+  p
+    | Rate:
+    span.rate=< @rating
+
+  ul
+    - $.each @attachments, (index, a)=>
+      li id="attachment_#{a.id}"
+        a href="#{a.identifier}" = a.url
+        - if gon.user_id && @user_id == gon.user_id
+          a.delete-attachment-link data-attachment-id="#{a.id}" href="" Delete

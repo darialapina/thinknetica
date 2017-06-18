@@ -16,9 +16,5 @@
 //= require twitter/bootstrap
 //= require turbolinks
 //= require cocoon
-//= require action_cable
 //= require_tree ./templates
 //= require_tree .
-
-var App = App || {};
-App.cable = ActionCable.createConsumer();

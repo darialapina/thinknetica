@@ -10,6 +10,8 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.build
     @answer.attachments.build
+    gon.question_id = @question.id
+    gon.question_user_id = @question.user_id
   end
 
   def new
@@ -69,10 +71,6 @@ private
     ActionCable.server.broadcast(
       'questions',
       @question.as_json(methods: :rating)
-      # ApplicationController.render(
-      #   partial: 'questions/question',
-      #   locals: { question: @question }
-      # )
     )
   end
 end
