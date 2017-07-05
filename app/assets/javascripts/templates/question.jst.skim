@@ -1,4 +1,4 @@
-div id="question_#{@id}"
+li.list-group-item id="question_#{@id}"
   a href="/questions/#{@id}" =@title
 
   - if @user_id == gon.user_id
@@ -15,4 +15,4 @@ div id="question_#{@id}"
 
   p
     | Rate:
-    span.rate=< @rating
+    span.badge.rate=< @rating

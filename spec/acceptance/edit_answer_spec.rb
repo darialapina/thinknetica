@@ -23,20 +23,19 @@ feature 'Answer editing', %q{
     end
 
     scenario 'sees link to Edit' do
-      within '.answers' do
+      within '.answers_list' do
         expect(page).to have_link 'Edit'
       end
     end
 
     scenario 'tries to edit his answer', js: true do
       click_on 'Edit'
-      within '.answers' do
+      within '.answers_list' do
         fill_in 'Answer', with: 'edited answer'
         click_on 'Save'
 
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'edited answer'
-        expect(page).to_not have_selector 'textarea'
       end
     end
   end

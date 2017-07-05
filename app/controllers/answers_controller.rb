@@ -10,11 +10,6 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.create(answer_params.merge(user_id: current_user.id))
-    if @answer.save
-      render json: @answer
-    else
-      render json: @answer.errors.full_messages, status: :unprocessable_entity
-    end
   end
 
   def update
@@ -52,7 +47,7 @@ private
   def publish_answer
     return if @answer.errors.any?
     ActionCable.server.broadcast(
-      "answers_to_#{@answer.question_id}",
+      "answers_to_question_#{@answer.question_id}",
       ApplicationController.render(partial: 'answers/answer', formats: :json, locals: { answer: @answer })
     )
   end

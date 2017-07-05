@@ -2,9 +2,9 @@ h1 Questions list
 
 p= link_to 'Ask question', new_question_path
 
-div.questions-list
+ul.questions-list.list-group
   - @questions.each do |question|
-    div id="question_#{question.id}"
+    li.list-group-item id="question_#{question.id}"
       = link_to question.title, question
       - if user_signed_in? && current_user.author_of?(question)
         '
@@ -15,5 +15,5 @@ div.questions-list
         =< link_to 'Down', '#', class: 'vote-link', data: { value: -1, votable_id: question.id, votable_type: 'Question' }, style: "display: #{ question.has_vote_by?(current_user) ? 'none' : '' }"
       p
         | Rate:
-        span.rate=< question.rating
+        span.badge.rate=< question.rating
 

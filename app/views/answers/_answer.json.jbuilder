@@ -6,3 +6,8 @@ json.attachments answer.attachments do |attachment|
   json.identifier attachment.file.identifier
   json.url attachment.file.url
 end
+
+json.comments answer.comments do |comment|
+  json.id comment.id
+  json.body comment.body
+end

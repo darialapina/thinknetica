@@ -15,19 +15,19 @@ feature 'Vote for answer', %q{
 
     within '.answers' do
       click_on 'Up'
-      expect(page).to have_content 'Rate: 1'
+      expect(page).to have_content '1'
       expect(page).to_not have_content 'Up'
       expect(page).to have_content 'Reset'
       expect(page).to_not have_content 'Down'
 
       click_on 'Reset'
-      expect(page).to have_content 'Rate: 0'
+      expect(page).to have_content '0'
       expect(page).to_not have_content 'Reset'
       expect(page).to have_content 'Up'
       expect(page).to have_content 'Down'
 
       click_on 'Down'
-      expect(page).to have_content 'Rate: -1'
+      expect(page).to have_content '-1'
       expect(page).to_not have_content 'Down'
       expect(page).to_not have_content 'Up'
       expect(page).to have_content 'Reset'
@@ -39,7 +39,7 @@ feature 'Vote for answer', %q{
     visit question_path(answer.question)
 
     within '.answers' do
-      expect(page).to have_content 'Rate: 0'
+      expect(page).to have_content '0'
       expect(page).to_not have_content 'Up'
       expect(page).to_not have_content 'Reset'
       expect(page).to_not have_content 'Down'
@@ -50,7 +50,7 @@ feature 'Vote for answer', %q{
     visit question_path(answer.question)
 
     within '.answers' do
-      expect(page).to have_content 'Rate: 0'
+      expect(page).to have_content '0'
       expect(page).to_not have_content 'Up'
       expect(page).to_not have_content 'Reset'
       expect(page).to_not have_content 'Down'
