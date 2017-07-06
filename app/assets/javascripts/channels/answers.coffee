@@ -4,9 +4,6 @@ answers_channel = ->
       connected: ->
         @perform 'follow', question_id: gon.question_id
 
-      disconnected: ->
-        # Called when the subscription has been terminated by the server
-
       received: (data) ->
         answer = $.parseJSON(data)
         $('.answers ul.answers_list').append  JST["templates/answer"](answer)

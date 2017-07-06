@@ -4,9 +4,6 @@ comments_channel = ->
       connected: ->
         @perform 'follow', question_id: gon.question_id
 
-      disconnected: ->
-        # Called when the subscription has been terminated by the server
-
       received: (data) ->
         comment = $.parseJSON(data)
         commentable_class_string = comment.commentable_type.toLowerCase() + '_' + comment.commentable_id
