@@ -40,5 +40,6 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config.logger = Logger.new(STDOUT)
+  config.action_cable.disable_request_forgery_protection = true
+  # config.logger = Logger.new(STDOUT)
 end

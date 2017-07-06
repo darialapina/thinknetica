@@ -37,10 +37,10 @@ RSpec.describe AnswersController, type: :controller do
       it 'creates and saves new answer for the user to DB' do
         expect { post :create, params: { question_id: question.id, answer: attributes_for(:answer), format: :js } }.to change(@user.answers, :count).by(1)
       end
-      it 'render create template' do
-        post :create, params: { question_id: question.id, answer: attributes_for(:answer), format: :js }
-        expect(response).to render_template :create
-      end
+      # it 'render create template' do
+      #   post :create, params: { question_id: question.id, answer: attributes_for(:answer), format: :js }
+      #   expect(response).to render_template :create
+      # end
     end
 
     context 'with invalid attributes' do

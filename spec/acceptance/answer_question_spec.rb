@@ -13,24 +13,27 @@ feature 'answer a question', %q{
     sign_in(user)
     visit question_path(question)
 
-    fill_in 'Body', with: 'My answer'
-    click_on 'Create'
+    within '.answers' do
+      fill_in 'Body', with: 'My answer'
+      click_on 'Create'
+    end
 
     expect(current_path).to eq question_path(question)
 
     within '.answers' do
       expect(page).to have_content 'My answer'
+      expect(page).not_to have_content "Body can't be blank"
     end
-
-    expect(page).not_to have_content "Body can't be blank"
   end
 
   scenario 'Authenticated user creates an invalid answer', js: true do
     sign_in(user)
-    # sleep(1)
+
     visit question_path(question)
-    fill_in 'Body', with: nil
-    click_on 'Create'
+    within '.answers' do
+      fill_in 'Body', with: nil
+      click_on 'Create'
+    end
 
     expect(current_path).to eq question_path(question)
     within '.answers_errors' do
@@ -43,4 +46,50 @@ feature 'answer a question', %q{
 
     expect(page).not_to have_content 'Give an answer'
   end
+
+  context 'mulitple sessions' do
+    scenario "answer appears on another user's page", js: true do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('other_user') do
+        other_user = create(:user)
+        sign_in(other_user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        within '.answers' do
+          fill_in 'Body', with: 'My answer'
+          click_on 'Create'
+        end
+
+        within '.answers' do
+          expect(page).to have_content 'My answer'
+          expect(page).not_to have_content "Body can't be blank"
+        end
+      end
+
+      Capybara.using_session('guest') do
+        within '.answers' do
+          expect(page).to have_content 'My answer'
+        end
+      end
+
+      Capybara.using_session('other_user') do
+        within '.answers' do
+          expect(page).to have_content 'My answer'
+          expect(page).to have_content 'Up'
+          expect(page).to have_content 'Down'
+        end
+      end
+    end
+  end
+
 end

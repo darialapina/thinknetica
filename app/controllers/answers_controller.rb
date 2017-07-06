@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_answer, only: [:update, :destroy, :set_best]
   before_action :load_question
-
+  after_action :publish_answer, only: [:create]
 
   def new
     @answer = @question.answers.build
@@ -42,5 +42,13 @@ private
 
   def answer_params
     params.require(:answer).permit(:body, attachments_attributes: [:id, :file, :_destroy])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+    ActionCable.server.broadcast(
+      "answers_to_question_#{@answer.question_id}",
+      ApplicationController.render(partial: 'answers/answer', formats: :json, locals: { answer: @answer })
+    )
   end
 end

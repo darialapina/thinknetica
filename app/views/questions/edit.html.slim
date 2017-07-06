@@ -1,12 +1,14 @@
-h1 Edit question
-= render 'errors', item: @question
+.row
+  .col-lg-6
+    h1 Edit question
+    = render 'errors', item: @question
 
-= form_for @question do |f|
-  p
-    = f.label :title
-    = f.text_field :title
-  p
-    = f.label :body
-    = f.text_area :body
+    = form_for @question do |f|
+      .form-group
+        = f.label :title
+        = f.text_field :title, class: 'form-control'
+      .form-group
+        = f.label :body
+        = f.text_area :body, class: 'form-control'
 
-  p= f.submit 'Save'
+      p= f.submit 'Save', class: 'btn btn-primary'

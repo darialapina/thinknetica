@@ -1,5 +1,6 @@
 - if answer.persisted?
-  li id="answer_#{answer.id}"
+  li.list-group-item id="answer_#{answer.id}"
+    span.badge.rate=> answer.rating
     - if user_signed_in? && current_user.author_of?(@question)
       = radio_button_tag :best, answer.id, answer.best?, class: 'set-best-answer', data: { answer_id: answer.id, question_id: @question.id }
       '
@@ -19,10 +20,6 @@
       =< link_to 'Up', '#', class: 'vote-link', data: { value: 1, votable_id: answer.id, votable_type: 'Answer' }, style: "display: #{ answer.has_vote_by?(current_user) ? 'none' : '' }"
       =< link_to 'Reset', '#', class: 'reset-vote-link', data: { votable_id: answer.id, votable_type: 'Answer' }, style: "display: #{ answer.has_vote_by?(current_user) ? '' : 'none' }"
       =< link_to 'Down', '#', class: 'vote-link', data: { value: -1, votable_id: answer.id, votable_type: 'Answer' }, style: "display: #{ answer.has_vote_by?(current_user) ? 'none' : '' }"
-    p
-      | Rate:
-      span.rate=< answer.rating
-
 
     ul
       - answer.attachments.each do |a|
@@ -30,3 +27,13 @@
           = link_to a.file.identifier, a.file.url
           -if user_signed_in? && current_user.author_of?(answer)
               =link_to 'Delete', '', class: 'delete-attachment-link', data: { attachment_id: a.id }
+
+    h4 Answer comments
+    .answer_comments id="comments_section_answer_#{answer.id}"
+      p.notice
+      ul.comments_list.list-group id="comments_answer_#{answer.id}"
+        = render answer.comments
+
+      - if user_signed_in?
+        .row
+          = render 'comments/comment_form', comment: answer.comments.new

@@ -13,25 +13,39 @@ ul.question_attachments
       -if user_signed_in? && current_user.author_of?(@question)
           =link_to 'Delete', '', class: 'delete-attachment-link', data: { attachment_id: a.id }
 
+hr
+h3 Comments
+.question_comments id="comments_section_question_#{@question.id}"
+  p.notice
+  ul.comments_list.list-group id="comments_question_#{@question.id}"
+    = render @question.comments
+
+  - if user_signed_in?
+    .row
+      = render 'comments/comment_form', comment: @comment
+
+hr
+
 h3 Answers
 .answers
   p.notice
-  ul.answers_list
+  ul.answers_list.list-group
     = render @question.answers
 
-- if user_signed_in?
-  h3 Give an answer
-  .answers_errors
+  - if user_signed_in?
+    .row
+      .col-lg-4.panel.panel-default
+        h3 Give an answer
+        .answers_errors
+        = form_for [@question, @answer], remote: true do |f|
+          .form-group
+            = f.label :body
+            = f.text_area :body, class: 'form-control'
+          p Attachments:
+          .attachments
+            = f.fields_for :attachments do |attachment|
+              = render 'attachment_fields', f: attachment
+            .links
+              = link_to_add_association 'Add file', f, :attachments
 
-  = form_for [@question, @answer], remote: true do |f|
-    p
-      = f.label :body
-      = f.text_area :body
-    p Attachments:
-    .attachments
-      = f.fields_for :attachments do |attachment|
-        = render 'attachment_fields', f: attachment
-      .links
-        = link_to_add_association 'Add file', f, :attachments
-
-    p= f.submit 'Create'
+          p= f.submit 'Create', class: 'btn btn-primary'
