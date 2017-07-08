@@ -20,7 +20,7 @@ ready = ->
         id: answer_id
         question_id: question_id
       success: (data) ->
-        $('.answers p.notice').html(data.message)
+        $('.answers p.notice').html("You've set the best answer")
         $('li#answer_' + answer_id).parent().prepend($('li#answer_' + answer_id))
       error: ->
         $('.answers p.notice').html('Something is wrong.')

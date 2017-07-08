@@ -17,7 +17,7 @@ feature "User create question", %q{
     fill_in 'Body', with: 'Test body'
     click_on 'Create'
 
-    expect(page).to have_content 'Your question was successfully created.'
+    expect(page).to have_content 'Question was successfully created.'
   end
 
   scenario 'Authenticated user creates an invalid question' do
@@ -28,7 +28,7 @@ feature "User create question", %q{
     fill_in 'Body', with: ''
     click_on 'Create'
 
-    expect(page).to have_content 'Your question has errors.'
+    expect(page).to have_content 'Question could not be created.'
     expect(page).to have_content "Body can't be blank"
   end
 
@@ -62,7 +62,7 @@ feature "User create question", %q{
         fill_in 'Body', with: 'Test body'
         click_on 'Create'
 
-        expect(page).to have_content 'Your question was successfully created.'
+        expect(page).to have_content 'Question was successfully created.'
         expect(page).to have_content 'Test question'
         expect(page).to have_content 'Test body'
       end
