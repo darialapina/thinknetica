@@ -121,7 +121,7 @@ RSpec.describe AnswersController, type: :controller do
     context 'owner of the question' do
       it 'sets best answer' do
         sign_in(answer.question.user)
-        patch :set_best, params: { id: answer, format: :js }
+        patch :set_best, params: { id: answer, format: :json }
         answer.reload
         expect(answer.best?).to be true
       end
@@ -129,14 +129,14 @@ RSpec.describe AnswersController, type: :controller do
       it 'changes best answer' do
         other_answer = create(:answer, question: answer.question, best: true)
         sign_in(answer.question.user)
-        patch :set_best, params: { id: answer, format: :js }
+        patch :set_best, params: { id: answer, format: :json }
         other_answer.reload
         expect(other_answer.best?).to be false
       end
     end
 
     it "doesn't set best answer to a question belonging to somebody else" do
-      patch :set_best, params: { id: answer, format: :js }
+      patch :set_best, params: { id: answer, format: :json }
       answer.reload
       expect(answer.best?).to be false
     end

@@ -13,6 +13,7 @@ votes = ->
     $.ajax
       type: "POST"
       url: "/votes"
+      dataType: "json"
       data:
         value: value
         votable_id: votable_id
@@ -33,6 +34,7 @@ votes = ->
     $.ajax
       type: "DELETE"
       url: "/votes/reset?" + $.param({"votable_id": votable_id, "votable_type" : votable_type})
+      dataType: "json"
       success: (rating) ->
         $('#' + votable_type.toLowerCase() + '_' + votable_id + ' .vote-link').show()
         $('#' + votable_type.toLowerCase() + '_' + votable_id + ' .reset-vote-link').hide()

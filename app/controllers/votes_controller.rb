@@ -7,8 +7,6 @@ class VotesController < ApplicationController
     if !current_user.author_of?(@votable) && !@votable.has_vote_by?(current_user)
       current_user.votes.create({value: params[:value], votable: @votable})
       render json: @votable.rating
-    else
-      head :unauthorized
     end
   end
 
@@ -17,8 +15,6 @@ class VotesController < ApplicationController
       @votable = @vote.votable
       @vote.destroy!
       render json: @votable.rating
-    else
-      head :unauthorized
     end
   end
 

@@ -2,13 +2,11 @@ class AttachmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_attachment
 
+  respond_to :json
+
   def destroy
-    @attachable = @attachment.attachable
-    if current_user.author_of?(@attachable)
-      @attachment.destroy
-      head :ok
-    else
-      head :unauthorized
+    if current_user.author_of?(@attachment.attachable)
+      respond_with(@attachment.destroy)
     end
   end
 

@@ -14,7 +14,7 @@ feature 'Delete question', %q{
     visit questions_path
     click_on 'Delete'
 
-    expect(page).to have_content 'Your question was successfully deleted.'
+    expect(page).to_not have_content question.title
   end
 
   scenario "Authenticated user tries to delete somebody else's question" do

@@ -11,6 +11,7 @@ delete_attachments = ->
     $.ajax
       type: "DELETE"
       url: "/attachments/" + attachment_id
+      dataType: "json"
       data:
         id: attachment_id
       success: ->

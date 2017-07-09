@@ -4,29 +4,33 @@ class AnswersController < ApplicationController
   before_action :load_question
   after_action :publish_answer, only: [:create]
 
+  respond_to :js
+  respond_to :json, only: [:set_best]
+
   def new
-    @answer = @question.answers.build
+    respond_with(@answer = @question.answers.build)
   end
 
   def create
-    @answer = @question.answers.create(answer_params.merge(user_id: current_user.id))
+    respond_with(@answer = @question.answers.create(answer_params.merge(user_id: current_user.id)))
   end
 
   def update
-    @answer.update(answer_params) if current_user.author_of?(@answer)
+    if current_user.author_of?(@answer)
+      @answer.update(answer_params)
+      respond_with(@answer)
+    end
   end
 
   def destroy
-    @answer.destroy if current_user.author_of?(@answer)
+    if current_user.author_of?(@answer)
+      respond_with(@answer.destroy)
+    end
   end
 
   def set_best
     if current_user.author_of?(@question)
-      @answer.set_best
-
-      render json: { message: "You've set the best answer" }
-    else
-      render json: { message: "You're not allowed to set the best answer for this question" }
+      respond_with(@answer.set_best)
     end
   end
 

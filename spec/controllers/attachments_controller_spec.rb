@@ -10,19 +10,20 @@ RSpec.describe AttachmentsController, type: :controller do
       it 'deletes answer belonging to user' do
         sign_in(question.user)
 
-        expect { delete :destroy, params: { id: attachment, format: :js } }.to change(question.attachments, :count).by(-1)
+        expect { delete :destroy, params: { id: attachment, format: :json } }.to change(question.attachments, :count).by(-1)
       end
 
       it 'removing attachment from view' do
         sign_in(question.user)
 
-        delete :destroy, params: { id: attachment, format: :js }
-        expect(response.status).to eq 200
+        delete :destroy, params: { id: attachment, format: :json }
+        expect(response.status).to eq 204
       end
     end
 
     it "doesn't delete question belonging to somebody else" do
-      expect { delete :destroy, params: { id: attachment } }.not_to change(Attachment, :count)
+      expect { delete :destroy, params: { id: attachment, format: :json } }.not_to change(Attachment, :count)
+      expect(response.status).to eq 401
     end
   end
 

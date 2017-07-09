@@ -36,7 +36,6 @@ feature 'Question editing', %q{
 
       expect(page).to_not have_content question.body
       expect(page).to have_content 'edited question body'
-      expect(page).to have_content 'Your question was successfully updated.'
     end
 
     scenario 'tries to edit his question with invalid body' do
@@ -46,7 +45,6 @@ feature 'Question editing', %q{
       fill_in 'Body', with: ''
       click_on 'Save'
 
-      expect(page).to have_content 'Your question has errors.'
       expect(page).to have_content "Body can't be blank"
     end
   end
