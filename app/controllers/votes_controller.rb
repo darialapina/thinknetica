@@ -3,17 +3,13 @@ class VotesController < ApplicationController
   before_action :load_vote, only: [:reset]
   before_action :load_votable, only: [:create]
 
-# В этом контроллере нет смысла менять, пробовала несколько подходов
-# каждый раз приводит к ненужному усложнению
-# так как вернуть нужно просто цифру для отображения
   def create
     if !current_user.author_of?(@votable) && !@votable.has_vote_by?(current_user)
       current_user.votes.create({value: params[:value], votable: @votable})
       render json: @votable.rating
     end
   end
-# здесь, так как запрос DELETE, то не получилось бы вернуть значение
-# пришлось бы менять тип запроса на POST
+
   def reset
     if current_user.author_of?(@vote)
       @votable = @vote.votable
