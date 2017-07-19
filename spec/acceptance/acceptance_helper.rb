@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.configure do |config|
   Capybara.javascript_driver = :webkit
   Capybara.server = :puma
+  Capybara.server_host = "0.0.0.0"
+  Capybara.server_port = 4545
+  Capybara.default_wait_time = 5
 
   config.include AcceptanceMacros, type: :feature
 
