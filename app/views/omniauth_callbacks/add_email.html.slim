@@ -5,9 +5,6 @@
     = render 'errors', item: @user
 
     = form_tag register_path, method: :post do
-      = hidden_field_tag 'auth_hash[provider]', auth_hash.provider
-      = hidden_field_tag 'auth_hash[uid]', auth_hash.uid
-
       .form-group
         = label_tag 'Email'
         = text_field_tag 'auth_hash[info][email]', :email, class: 'form-control'

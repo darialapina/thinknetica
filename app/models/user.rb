@@ -28,7 +28,6 @@ class User < ApplicationRecord
       user = User.create!(email: email, password: password, password_confirmation: password)
 
       user.create_authorization(auth)
-      user.send_confirmation_instructions
     else
       password = Devise.friendly_token[0, 20]
       user = User.create(password: password, password_confirmation: password)
