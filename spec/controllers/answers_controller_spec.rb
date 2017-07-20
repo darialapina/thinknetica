@@ -74,6 +74,12 @@ RSpec.describe AnswersController, type: :controller do
         answer.reload
         expect(answer.body).to eq 'new body'
       end
+
+      it 'render update template' do
+        sign_in(answer.user)
+        patch :update, params: { id: answer, answer: attributes_for(:answer), format: :js }
+        expect(response).to render_template :update
+      end
     end
 
     context "other's answer" do
@@ -85,11 +91,6 @@ RSpec.describe AnswersController, type: :controller do
         answer.reload
         expect(answer.body).to_not eq 'new body'
       end
-    end
-
-    it 'render update template' do
-      patch :update, params: { id: answer, answer: attributes_for(:answer), format: :js }
-      expect(response).to render_template :update
     end
   end
 

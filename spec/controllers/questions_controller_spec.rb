@@ -74,9 +74,10 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    sign_in_user
-
-    before { get :edit, params: { id: question } }
+    before do
+      sign_in(question.user)
+      get :edit, params: { id: question }
+    end
 
     it 'assings the requested question to @question' do
       expect(assigns(:question)).to eq question

@@ -23,7 +23,7 @@ RSpec.describe VotesController, type: :controller do
       end
 
       it 'fails to save second vote for user' do
-        sign_in(vote.user)
+        sign_in vote.user
 
         expect { post :create, params: { value: 1, votable_id: answer.id, votable_type: 'Answer' }, format: :json }.not_to change(Vote, :count)
       end
@@ -38,7 +38,7 @@ RSpec.describe VotesController, type: :controller do
 
   describe 'DELETE#reset' do
     it 'deletes vote belonging to user' do
-      sign_in(vote.user)
+      sign_in vote.user
 
       expect { delete :reset, params: { votable_id: vote.votable_id, votable_type: vote.votable_type }, format: :json }.to change(vote.user.votes, :count).by(-1)
     end
