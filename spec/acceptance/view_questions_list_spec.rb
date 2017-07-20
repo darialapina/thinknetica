@@ -4,7 +4,7 @@ require_relative 'acceptance_helper'
 feature 'User views questions list', %q{
   In order to get around
   As a visitor
-  I wart to be able surf though all questions
+  I want to be able surf though all questions
 } do
 
   given!(:questions) { create_list(:question, 2) }

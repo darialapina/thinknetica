@@ -8,7 +8,10 @@ Rails.application.routes.draw do
 
   delete 'attachments/:id' => 'attachments#destroy'
 
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_scope :user do
+    post '/register' => 'omniauth_callbacks#register'
+  end
 
   resources :questions do
     resources :answers, shallow: true do
