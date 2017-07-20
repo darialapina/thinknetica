@@ -38,5 +38,7 @@ class Ability
     end
 
     can :reset, Vote, user: user
+
+    can :manage, :profile
   end
 end
