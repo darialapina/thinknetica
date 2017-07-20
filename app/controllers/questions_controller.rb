@@ -7,6 +7,8 @@ class QuestionsController < ApplicationController
 
   respond_to :html
 
+  authorize_resource
+
   def index
     respond_with(@questions = Question.all)
   end
@@ -29,16 +31,16 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(@question)
+    # if current_user.author_of?(@question)
       @question.update(question_params)
       respond_with(@question)
-    end
+    # end
   end
 
   def destroy
-    if current_user.author_of?(@question)
+    # if current_user.author_of?(@question)
       respond_with(@question.destroy!)
-    end
+    # end
   end
 
 private
