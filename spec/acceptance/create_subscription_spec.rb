@@ -9,15 +9,15 @@ feature "User subscribe to a question", %q{
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  scenario 'Authenticated user subscribes to a question' do
+  scenario 'Authenticated user subscribes to a question', js: true do
     sign_in(user)
     visit question_path(question)
     click_link 'Subscribe!'
 
-    expect(page).to have_content 'Subscription was successfully created.'
+    expect(page).to have_link 'Unsubscribe!'
   end
 
-  scenario 'Authenticated user wants to subscribe to the same question' do
+  scenario 'Authenticated user wants to subscribe to the same question', js: true do
     sign_in(user)
     visit question_path(question)
     click_link 'Subscribe!'

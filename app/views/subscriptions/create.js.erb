@@ -1,0 +1,6 @@
+<% if @subscription.errors.present? %>
+  $('.errors').html("<%= j render 'errors', item: @subscription %>");
+<% else %>
+  $('.errors').html("");
+  $('.subscription-link').replaceWith("<%= j link_to 'Unsubscribe!', @subscription.question.subscriptions.where(user_id: current_user.id).first, method: :delete, remote: true, class: 'subscription-link' %>")
+<% end %>

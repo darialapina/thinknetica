@@ -1,0 +1,6 @@
+<% if @subscription.errors.present? %>
+  $('.errors').html("<%= j render 'errors', item: @subscription %>");
+<% else %>
+  $('.errors').html("");
+  $('.subscription-link').replaceWith("<%= j link_to 'Subscribe!', subscriptions_path(subscription: {question_id: @question}), method: :post, remote: true, class: 'subscription-link' %>")
+<% end %>

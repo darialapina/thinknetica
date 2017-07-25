@@ -3,4 +3,9 @@ FactoryGirl.define do
     user
     question
   end
+
+  factory :invalid_subscription, class: 'Subscription' do
+    user
+    question nil
+  end
 end
