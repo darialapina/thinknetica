@@ -5,6 +5,7 @@ RSpec.describe User do
   it { should have_many(:answers).dependent(:destroy) }
   it { should have_many(:votes).dependent(:destroy) }
   it { should have_many(:authorizations).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
 
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
@@ -29,6 +30,20 @@ RSpec.describe User do
 
     it 'should return false if user is NOT an owner of an answer' do
       expect(other_user.author_of?(question)).to eq false
+    end
+  end
+
+  describe 'subscribed_to?' do
+    let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+
+    it 'should return true if user is subscribed to a question' do
+      expect(user.subscribed_to?(question)).to eq true
+    end
+
+    it 'should return false if user is NOT subscribed to a question' do
+      expect(other_user.subscribed_to?(question)).to eq false
     end
   end
 

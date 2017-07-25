@@ -9,9 +9,14 @@ class User < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :votes, dependent: :destroy
   has_many :authorizations, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   def author_of?(thing)
     self.id == thing.user_id
+  end
+
+  def subscribed_to?(question)
+    question.subscriptions.where(user: self).exists?
   end
 
   def self.find_for_oauth(auth)

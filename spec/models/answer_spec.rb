@@ -60,4 +60,18 @@ RSpec.describe Answer, type: :model do
       expect(answer.has_vote_by?(other_user)).to eq false
     end
   end
+
+  describe 'inform_subscribers' do
+    let(:answer) { build(:answer) }
+
+    it 'is called on answer#create' do
+      expect(answer).to receive(:inform_subscribers)
+      answer.save
+    end
+
+    it 'adds InformSubscribersJob' do
+      expect(InformSubscribersJob).to receive(:perform_later).with(answer)
+      answer.save
+    end
+  end
 end

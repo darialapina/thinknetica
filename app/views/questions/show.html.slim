@@ -3,6 +3,13 @@ h1.question
   - if user_signed_in? && current_user.author_of?(@question)
     '
     small= link_to 'Edit', edit_question_path(@question)
+  - if user_signed_in? && !current_user.subscribed_to?(@question)
+    '
+    small= link_to 'Subscribe!', edit_question_path(@question)
+  - elsif user_signed_in? && current_user.subscribed_to?(@question)
+    '
+    small= link_to 'Unsubscribe!', edit_question_path(@question)
+
 .errors
 p= @question.body
 p Attachments:
