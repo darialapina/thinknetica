@@ -18,6 +18,7 @@ feature "User create question", %q{
     click_on 'Create'
 
     expect(page).to have_content 'Question was successfully created.'
+    expect(page).to have_link 'Unsubscribe!'
   end
 
   scenario 'Authenticated user creates an invalid question' do

@@ -5,6 +5,7 @@ RSpec.describe Question, type: :model do
   it { should belong_to :user }
   it { should have_many(:attachments).dependent(:destroy) }
   it { should have_many(:votes).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
 
   it { should validate_presence_of :title }
   it { should validate_presence_of :body }
@@ -30,6 +31,19 @@ RSpec.describe Question, type: :model do
 
     it "should return false if question doesn't have a vote by user" do
       expect(question.has_vote_by?(other_user)).to eq false
+    end
+  end
+
+  describe 'autosubscribe author after create' do
+    let(:question){ build(:question) }
+
+    it 'calls subscribe_author after create' do
+      expect(question).to receive(:autosubscribe_author)
+      question.save
+    end
+    it 'creates subscription for author after question creation' do
+      expect(Subscription).to receive(:create!).with({ user: question.user, question: question })
+      question.save
     end
   end
 end

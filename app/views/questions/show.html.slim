@@ -3,6 +3,13 @@ h1.question
   - if user_signed_in? && current_user.author_of?(@question)
     '
     small= link_to 'Edit', edit_question_path(@question)
+  - if user_signed_in? && !current_user.subscribed_to?(@question)
+    '
+    small= link_to 'Subscribe!', subscriptions_path(subscription: {question_id: @question}), method: :post, remote: true, class: 'subscription-link'
+  - elsif user_signed_in? && current_user.subscribed_to?(@question)
+    '
+    small= link_to 'Unsubscribe!', @question.subscriptions.where(user_id: current_user.id).first, method: :delete, remote: true, class: 'subscription-link'
+
 .errors
 p= @question.body
 p Attachments:

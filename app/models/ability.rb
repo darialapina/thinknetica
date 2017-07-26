@@ -40,5 +40,10 @@ class Ability
     can :reset, Vote, user: user
 
     can :manage, User
+
+    can :create, Subscription do |subscription|
+      !user.subscribed_to?(subscription)
+    end
+    can :destroy, Subscription, user: user
   end
 end

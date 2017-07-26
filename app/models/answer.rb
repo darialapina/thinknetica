@@ -12,10 +12,16 @@ class Answer < ApplicationRecord
 
   default_scope { order('best DESC') }
 
+  after_create :inform_subscribers
+
   def set_best
     Answer.transaction do
       self.question.answers.update_all(best: false)
       self.update!(best: true)
     end
+  end
+
+  def inform_subscribers
+    InformSubscribersJob.perform_later(self)
   end
 end
