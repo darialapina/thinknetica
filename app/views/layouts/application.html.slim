@@ -26,14 +26,12 @@ html lang="en"
           = link_to "Thinknetica", root_path, class: 'navbar-brand'
           .navbar-collapse.collapse.navbar-responsive-collapse
             ul.nav.navbar-nav
-              li= link_to "Link 1", "/path1"
-              li= link_to "Link 2", "/path2"
-              li= link_to "Link 3", "/path3"
               - if user_signed_in?
                 li= link_to 'Sign out', destroy_user_session_path, method: :delete
               - else
                 li= link_to 'Sign in', new_user_session_path
                 li= link_to 'Sign up', new_user_registration_path
+            = render 'search/form'
 
 
     .container

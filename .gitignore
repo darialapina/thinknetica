@@ -28,3 +28,6 @@ config/secrets.yml
 /public/spec
 /public/tmp
 /public/system
+
+config/*.sphinx.conf
+db/sphinx

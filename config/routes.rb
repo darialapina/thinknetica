@@ -1,6 +1,8 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  get '/search' => 'search#search'
+
   resources :subscriptions, only: [:create, :destroy]
 
   authenticate :user, lambda { |u| u.admin? } do
