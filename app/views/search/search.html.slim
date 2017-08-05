@@ -1,6 +1,5 @@
 h1 Search results
 
 ul#search_results
-  - if !@results.blank?
-    - @results.each do |result|
-      = render result.class.to_s.downcase, result: result
+  - @results.each do |result|
+    = render result.class.to_s.downcase, result: result
