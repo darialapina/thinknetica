@@ -10,6 +10,8 @@ set :deploy_user, 'deployer'
 set :rbenv_type, :user
 set :rbenv_ruby, '2.4.1'
 
+set :sidekiq_options, "-q default -q mailers"
+
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", ".env"
 
@@ -34,4 +36,3 @@ namespace :deploy do
 
   after :publishing, :restart
 end
-

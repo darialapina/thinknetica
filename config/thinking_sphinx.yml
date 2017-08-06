@@ -1,7 +1,6 @@
 development: &my_settings
-  enable_star: true
-  min_word_len: 3
-  morphology: stem_ru
+  min_word_len: 2
+
 test:
   <<: *my_settings
   mysql41: 9307
