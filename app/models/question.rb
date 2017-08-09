@@ -11,6 +11,8 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
+  default_scope { order(:created_at) }
+
   after_create :autosubscribe_author
 
   def autosubscribe_author

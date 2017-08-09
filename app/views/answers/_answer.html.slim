@@ -32,8 +32,9 @@
     .answer_comments id="comments_section_answer_#{answer.id}"
       p.notice
       ul.comments_list.list-group id="comments_answer_#{answer.id}"
-        = render answer.comments
+        = render answer.comments, cached: true
 
       - if user_signed_in?
-        .row
-          = render 'comments/comment_form', comment: answer.comments.new
+        - cache ['comment_form', answer] do
+          .row
+            = render 'comments/comment_form', comment: answer.comments.new
