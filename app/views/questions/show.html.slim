@@ -11,7 +11,8 @@ h1.question
     small= link_to 'Unsubscribe!', @question.subscriptions.where(user_id: current_user.id).first, method: :delete, remote: true, class: 'subscription-link'
 
 .errors
-p= @question.body
+- cache @question do
+  p= @question.body
 p Attachments:
 ul.question_attachments
   - @question.attachments.each do |a|
@@ -20,16 +21,18 @@ ul.question_attachments
       -if user_signed_in? && current_user.author_of?(@question)
           =link_to 'Delete', '', class: 'delete-attachment-link', data: { attachment_id: a.id }
 
+
 hr
 h3 Comments
 .question_comments id="comments_section_question_#{@question.id}"
   p.notice
   ul.comments_list.list-group id="comments_question_#{@question.id}"
-    = render @question.comments
+    = render @question.comments, cached: true
 
   - if user_signed_in?
-    .row
-      = render 'comments/comment_form', comment: @comment
+    - cache ['comment_form', @question] do
+      .row
+        = render 'comments/comment_form', comment: @comment
 
 hr
 
