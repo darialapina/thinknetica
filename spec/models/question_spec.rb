@@ -12,6 +12,18 @@ RSpec.describe Question, type: :model do
 
   it { should accept_nested_attributes_for(:attachments).allow_destroy(true) }
 
+  describe 'default order questions' do
+    let!(:question1) { create(:question) }
+    let!(:question2) { create(:question) }
+    let!(:question3) { create(:question) }
+
+    it 'should order questions by created_at' do
+      questions = Question.all
+      expect(questions.first.id).to eq question1.id
+      expect(questions.last.id).to eq question3.id
+    end
+  end
+
   it 'should count total rate for question' do
     question = create(:question)
     votes = create_list(:vote, 3, votable: question, value: 1)
